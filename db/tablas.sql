@@ -1,37 +1,34 @@
 -- Active: 1707881043212@@localhost@5432
-CREATE DATABASE redsocial
+CREATE DATABASE red_social
 
-create table tbl_rol 
-(
-    id serial PRIMARY key,
-    nombre_rol varchar(200), 
-    fecha_creacion TIMESTAMP DEFAULT current_timestamp, 
-    activo BOOLEAN DEFAULT true
+CREATE TABLE usuarios (
+  id SERIAL PRIMARY KEY,
+  usuario VARCHAR(255) NOT NULL,
+  correo_electronico VARCHAR(255) NOT NULL,
+  contrasena VARCHAR(255) NOT NULL,
+  nombre_completo VARCHAR(255),
+  fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table tbl_usuarios 
-(
-    nombre_usuario  varchar(20) primary key,
-    correo_electronico varchar(50),
-    contrasena varchar(20),
-    nombre varchar(200),
-    apellido varchar(200),
-    foto_perfil bytea,
-    id_rol int,
-    fecha_creacion TIMESTAMP DEFAULT current_timestamp, 
-    activo BOOLEAN DEFAULT true, 
-    constraint fk_id_rol FOREIGN key (id_rol) REFERENCES tbl_rol (id)
+CREATE TABLE publicaciones(
+    id SERIAL NOT NULL,
+    contenido varchar(280) NOT NULL,
+    fecha_publicacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    usuario_id integer,
+    usuario varchar(255),
+    PRIMARY KEY(id),
+    CONSTRAINT publicaciones_usuario_id_fkey FOREIGN key(usuario_id) REFERENCES usuarios(id)
 );
 
-create table tbl_publicacion
-(
-    id SERIAL PRIMARY key,
-    imagen bytea , 
-    mime_type varchar(500), 
-    nombre_archivo varchar(500),
-    caption varchar(250), 
-    nombre_usuario varchar(20) REFERENCES tbl_usuarios(nombre_usuario), 
-    fecha_post TIMESTAMP DEFAULT current_timestamp, 
-    activo bool DEFAULT true
+CREATE TABLE comentarios (
+  id SERIAL PRIMARY KEY,
+  publicacion_id INT NOT NULL,
+  usuario_id INT NOT NULL,
+  contenido TEXT NOT NULL,
+  fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id),
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
+INSERT INTO usuarios (usuario, correo_electronico, contrasena, nombre_completo)
+VALUES ('albaz', 'albaz@gmail.com', 'test', 'alba zuniga');

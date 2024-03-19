@@ -1,9 +1,9 @@
-import Express from "express";
-import { publicacion } from "./routes/routePublicacion.js";
-import { usuario } from "./routes/routeUser.js";
-const app = Express();
-//import { usuarioCrud } from "./routes/routeUserCRUD.js";//
 import cors from 'cors';
+import Express from "express";
+import { comentario } from "./routes/routeComentario.js";
+import { publicacion } from "./routes/routePublicacion.js";
+import { usuarios } from "./routes/routeUser.js";
+const app = Express();
 
 
 // Middleware 
@@ -16,14 +16,14 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 // Rutas
-app.use('/api/usuario', usuario);
+app.use('/api/usuario', usuarios);
 app.use('/api/publicacion', publicacion);
-//app.use('/api/usuarioCrud', usuarioCrud);//
+app.use('/api/comentario', comentario);
 
 
 //Puerto
-app.listen(4000, ()=>{
+app.listen(3000, ()=>{
 
-    console.log("Esuchando en el puerto 4000");
+    console.log("Escuhando en el puerto 3000");
 
 });

@@ -1,21 +1,13 @@
 import Express from "express";
-import multer from "multer";
-import {
-    deletePublicacion,
-    getPublicaciones,
-    postPublicacion,
-    putPublicacion
-} from "../controllers/controllerPublicacion.js";
 const publicacion = Express();
-const storage = multer.memoryStorage();
-const upload = multer( {storage : storage} );
 
-publicacion.post ('', upload.single('imagen'), postPublicacion )
+import {
+    getPublicacion,
+    postPublicacion
+} from "../controllers/controllerPublicacion.js";
 
-publicacion.get ('' , getPublicaciones);
-
-publicacion.delete ('/:id' , deletePublicacion);
-
-publicacion.put ('/:id' , putPublicacion);
+publicacion.post ('', postPublicacion )
+publicacion.get('', getPublicacion);
 
 export { publicacion };
+

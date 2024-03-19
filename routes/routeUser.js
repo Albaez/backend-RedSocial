@@ -1,5 +1,6 @@
 import Express from "express";
-const usuario = Express();
+const usuarios = Express();
+
 
 import {
     actualizarContrasena,
@@ -10,20 +11,20 @@ import {
     putUsuario
 } from "../controllers/controllerUser.js";
 
-usuario.use(Express.json());
+usuarios.use(Express.json());
 
-usuario.post('', postUsuario);
+usuarios.post('', postUsuario);
 
-usuario.get('/:nombre_usuario', getUsuario);
+usuarios.get('/:usuario', getUsuario);
 
-usuario.get('/auth/:nombre_usuario/:pass', getAuth);
+usuarios.get('/auth/:usuario/:contrasena', getAuth);
 
-usuario.put('/:nombre_usuario', putUsuario);
+usuarios.put('/:usuario', putUsuario);
 
-usuario.put('/actualizar_pass/:nombre_usuario', actualizarContrasena);
+usuarios.put('/actualizar_contrasena/:usuario', actualizarContrasena);
 
-usuario.delete('/:nombre_usuario', deleteUsuario);
+usuarios.delete('/:usuario', deleteUsuario);
 
 export {
-    usuario
+    usuarios
 };
