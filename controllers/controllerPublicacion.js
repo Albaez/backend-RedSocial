@@ -1,13 +1,14 @@
 import { db } from "../db/conn.js";
 
 const postPublicacion = async (req, res) => {
+
   try {
-    const { usuario, contenido } = req.body;
-    const params = [usuario, contenido];
+    const { usuario_id, usuario, contenido } = req.body;
+    const params = [usuario_id, usuario, contenido];
     const sql = `INSERT INTO Publicaciones 
-                    (usuario, contenido)
+                    (usuario_id, usuario, contenido)
                     VALUES 
-                    ($1, $2)
+                    ($1, $2, $3)
                   RETURNING contenido, usuario, 'Insercion Exitosa' AS mensaje`;
 
     const result = await (db.query(sql, params));
@@ -22,7 +23,6 @@ const getPublicacion = async (req, res) => {
   try {
     const sql = `SELECT contenido, usuario_id, usuario  
                     FROM publicaciones 
-                    WHERE usuario = true
                     ORDER BY fecha_publicacion DESC`;
 
     const result = await db.query(sql);
@@ -36,7 +36,7 @@ const getPublicacion = async (req, res) => {
   } catch (err) {
     res.status(500).json({ mensaje: "Error en busqueda" });
   }
-};
+}
 
 export { getPublicacion, postPublicacion };
 
